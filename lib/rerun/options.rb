@@ -56,6 +56,10 @@ module Rerun
           options[:growl] = false
         end
 
+        opts.on("--timeout_init", "timeout value for initialization (in seconds)") do |val|
+          options[:timeout_init] = val
+        end
+
         opts.on_tail("-h", "--help", "--usage", "show this message") do
           puts opts
           return

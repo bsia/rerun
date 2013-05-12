@@ -13,6 +13,7 @@ Thread.abort_on_exception = true
 module Rerun
   class Watcher
     attr_reader :directory, :pattern, :priority
+    LISTENER_INIT_TIMEOUT = 5
 
     # Create a file system watcher. Start it by calling #start.
     #
@@ -27,6 +28,7 @@ module Rerun
           :directory => ".",
           :pattern => "**/*",
           :priority => 0,
+          :timeout_init=> LISTENER_INIT_TIMEOUT
       }.merge(options)
 
       @pattern = options[:pattern]
@@ -34,6 +36,7 @@ module Rerun
       @directories = sanitize_dirs(@directories)
       @priority = options[:priority]
       @thread = nil
+      @timeout_init = options[:timeout_init]
     end
 
     def sanitize_dirs(dirs)
@@ -70,7 +73,7 @@ module Rerun
     end
 
     def adapter
-      timeout(4) do
+      timeout(@timeout_init) do
         sleep 1 until adapter = @listener.instance_variable_get(:@adapter)
         adapter
       end
