@@ -24,6 +24,9 @@ module Rerun
         while true
           if c = key_pressed
             case c.downcase
+            when 'i'
+              say "Displaying info"
+              display_info
             when 'c'
               say "Clearing screen"
               clear_screen
@@ -38,6 +41,7 @@ module Rerun
             else
               puts "\n#{c.inspect} pressed inside rerun"
               puts [["c", "clear screen"],
+               ["i", "show information"],
                ["r", "restart"],
                ["p", "toggle pause"],
                ["x or q", "stop and exit"]
@@ -292,6 +296,15 @@ module Rerun
       # see http://ascii-table.com/ansi-escape-sequences-vt-100.php
       $stdout.print "\033[H\033[2J"
     end
+
+    def display_info
+      puts "Watching: "
+      dirs.each do |d|
+        puts "#{File.expand_path(d)}"
+      end
+      puts ""
+    end
+
 
   end
 end
