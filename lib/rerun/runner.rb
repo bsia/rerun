@@ -302,6 +302,7 @@ module Rerun
       dirs.each do |d|
         puts "#{File.expand_path(d)}"
       end
+      puts "The command is: \"#{@run_command}\""
       puts ""
     end
 
