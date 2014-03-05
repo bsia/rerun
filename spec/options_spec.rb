@@ -13,6 +13,7 @@ module Rerun
       assert { defaults[:pattern] == Options::DEFAULT_PATTERN }
       assert { defaults[:signal] == "TERM" }
       assert { defaults[:growl] == true }
+      assert { defaults[:name] == 'Rerun' }
 
       assert { defaults[:clear].nil? }
       assert { defaults[:exit].nil? }
@@ -59,5 +60,9 @@ module Rerun
       assert { options[:dir] == ["a", "b", "foo", "other"] }
     end
 
+    it "accepts --name for a custom application name" do
+      options = Options.parse ["--name", "scheduler"]
+      assert { options[:name] == "scheduler" }
+    end
   end
 end
